@@ -18,7 +18,7 @@ export default function Header(props: headerType) {
 
                         <div className="flex items-center lg:order-2">
                             <div className="flex mr-4">
-                                <div className=" items-center flex flex-row items-center space-x-4 ms-3 p-3 w-auto text-black font-inter bg-[#FFEDF1] rounded-md ">
+                                <div className=" items-center flex flex-row items-center space-x-4 ms-3 p-3 w-auto  text-black font-inter bg-[#FFEDF1] rounded-md ">
                                 <span className="text-s">Emily profile's  </span>
                                 <img src="/img/fi_chevron-downone.png" className="flex size-4" />
                                     

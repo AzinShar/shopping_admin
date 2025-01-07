@@ -1,11 +1,27 @@
 "use client";
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 
 export default function Login() {
 
-const [showPassword, setShowPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleLogin = useCallback(async () => {
+        const res = await fetch('/api/login', {
+            method: 'POST',
+            body: JSON.stringify({ email, password }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await res.json();
+        if(data.error)
+            alert(data.error)
+        else window.location.href = '/dashboard'
+    }, [email, password])
 
     return (
 
@@ -18,14 +34,17 @@ const [showPassword, setShowPassword] = useState(false);
             </div>
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className="space-y-6" action="#" method="POST">
+                <form className="space-y-6" action='#' method="POST">
                     <div>
 
                         <div className="relative flex items-center font-inter">
                             <input
+                                name='email'
                                 type="email"
                                 placeholder="Email Address"
                                 className=" font-inter pl-10 pr-4 py-2 border border-gray-300 rounded-lg  w-full bg-[#EFF1F9]"
+                                onChange={(e) => setEmail(e.target.value)}
+                                value={email}
                             />
                             <div className="absolute left-3 text-gray-500">
                                 <img src="/img/Message.png" className="w-3 h-auto" />
@@ -40,9 +59,12 @@ const [showPassword, setShowPassword] = useState(false);
                         <div>
                             <div className="relative flex items-center font-inter">
                                 <input
+                                    name='password'
                                     type={showPassword ? "text" : "password"}
                                     placeholder="Password"
                                     className="font-inter pl-10 pr-10 py-2 border border-gray-300 rounded-lg w-full bg-[#EFF1F9]"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                 />
                                 <div className="absolute left-3 text-gray-500">
                                     <img src="/img/Lock.png" className="w-3 h-auto" />
@@ -58,7 +80,7 @@ const [showPassword, setShowPassword] = useState(false);
                                     )}
                                 </div>
                             </div>
-                            </div>
+                        </div>
                         <div className="text-sm">
                             <a href="#" className="mt-2 font-inter text-primary/100 flex flex-row-reverse">Recover password</a>
                         </div>
@@ -70,13 +92,13 @@ const [showPassword, setShowPassword] = useState(false);
                     </p>
 
                     <div className="flex items-center flex-col">
-                        <button type="submit" className="flex justify-center w-40 center rounded-md bg-primary px-3 py-3 text-sm/6 font-inter text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Login</button>
+                        <button type="submit" onClick={()=>handleLogin()} className="flex justify-center w-40 center rounded-md bg-primary px-3 py-3 text-sm/6 font-inter text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Login</button>
                     </div>
                 </form>
-                
+
             </div>
         </div>
-        
+
 
     )
 }
