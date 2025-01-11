@@ -8,6 +8,7 @@ export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
     const handleLogin = useCallback(async () => {
         const res = await fetch('/api/login', {
@@ -19,7 +20,7 @@ export default function Login() {
         });
         const data = await res.json();
         if(data.error)
-            alert(data.error)
+            setError(data.error)
         else window.location.href = '/dashboard'
     }, [email, password])
 
@@ -30,6 +31,12 @@ export default function Login() {
                 <img className=" size-24 mx-auto" src="/img/Logo.png" alt="Your Company" />
                 <h2 className="mt-10 text-center font-inter text-2xl/9 font-bold tracking-tight text-black-900">Welcome Back!</h2>
                 <h4 className="mt-5 text-center font-inter text-1xl/9 tracking-tight text-black/30">Login to your account</h4>
+                <div className='mt-5 text-center font-inter text-1xl/9 tracking-tight h-3'>
+                    <h3 className="text-center text-red-500">{error}</h3>
+
+                </div>
+
+                
 
             </div>
 
@@ -88,11 +95,11 @@ export default function Login() {
 
                     <p className=" font-inter mt-10 text-center text-sm/6 text-[#8B8D97]">
                         Don't have an account?
-                        <a href="#" className="font-inter text-indigo-600  text-[#48BFE3]"> Sign up</a>
+                        <a href="http://localhost:3000/signup" className="font-inter text-indigo-600  text-[#48BFE3]"> Sign up</a>
                     </p>
 
                     <div className="flex items-center flex-col">
-                        <button type="submit" onClick={()=>handleLogin()} className="flex justify-center w-40 center rounded-md bg-primary px-3 py-3 text-sm/6 font-inter text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Login</button>
+                        <button type="button" onClick={()=>handleLogin()} className="flex justify-center w-40 center rounded-md bg-primary px-3 py-3 text-sm/6 font-inter text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Login</button>
                     </div>
                 </form>
 

@@ -7,7 +7,7 @@ export async function POST(req: Request) {
 
     if (!user) {
         return new Response(JSON.stringify({
-            error: 'User not found'
+            error: 'User is not found!'
         }), {
             status: 404
         })
@@ -21,7 +21,7 @@ export async function POST(req: Request) {
             })
         } else {
             return new Response(JSON.stringify({
-                error: 'Password incorrect'
+                error: 'Your Password is incorrect!'
             }), {
                 status: 401
             })
